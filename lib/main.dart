@@ -1,11 +1,12 @@
-// Dismissble is not a good option because it doesn't support
-// exposing a "Delete" button and waiting for it to be tapped
-// before deleting an item.
+// Dismissble is not a good option for
+// implementing a list with "swipe to delete"
+// because it doesn't support exposing a "Delete" button
+// and waiting for it to be tapped before deleting an item.
 // A better option is to use the flutter_swipe_action_cell library
 // in pub.dev.  That is demonstrated here.
+
 import 'package:flutter/material.dart';
 import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
-import './extensions/widget_extensions.dart';
 
 void main() => runApp(const MyApp());
 
@@ -43,18 +44,7 @@ class _HomeState extends State<Home> {
       body: Center(
         child: ListView.separated(
           itemCount: items.length,
-          itemBuilder: (_, index) => SwipeActionCell(
-            child: ListTile(title: Text(items[index])),
-            key: ObjectKey(items[index]),
-            trailingActions: <SwipeAction>[
-              SwipeAction(
-                title: 'Delete',
-                onTap: (_) {
-                  setState(() => items.removeAt(index));
-                },
-              ),
-            ],
-          ),
+          itemBuilder: _buildItem,
           separatorBuilder: (_, index) => Divider(
             color: Colors.black45,
             height: 1,
@@ -63,4 +53,21 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
+  Widget _buildItem(
+    BuildContext context,
+    int index,
+  ) =>
+      SwipeActionCell(
+        child: ListTile(title: Text(items[index])),
+        key: ObjectKey(items[index]),
+        trailingActions: <SwipeAction>[
+          SwipeAction(
+            title: 'Delete',
+            onTap: (_) {
+              setState(() => items.removeAt(index));
+            },
+          ),
+        ],
+      );
 }
