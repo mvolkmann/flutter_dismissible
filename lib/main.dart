@@ -5,6 +5,7 @@
 // in pub.dev.  That is demonstrated here.
 import 'package:flutter/material.dart';
 import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
+import './extensions/widget_extensions.dart';
 
 void main() => runApp(const MyApp());
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Swipe to Delete',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -35,33 +36,29 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    var tiles = <Widget>[];
-    for (var index = 0; index < items.length; index++) {
-      var item = items[index];
-      tiles.add(
-        SwipeActionCell(
-          child: ListTile(title: Text(item)),
-          key: ObjectKey(item),
-          trailingActions: <SwipeAction>[
-            SwipeAction(
-              title: 'Delete',
-              onTap: (CompletionHandler handler) async {
-                setState(() => items.removeAt(index));
-              },
-            ),
-          ],
-        ),
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Demo'),
+        title: Text('Swipe to Delete'),
       ),
       body: Center(
-        child: ListView(
-          //children: ListTile.divideTiles(context: context, tiles: tiles)
-          children: tiles,
+        child: ListView.separated(
+          itemCount: items.length,
+          itemBuilder: (_, index) => SwipeActionCell(
+            child: ListTile(title: Text(items[index])),
+            key: ObjectKey(items[index]),
+            trailingActions: <SwipeAction>[
+              SwipeAction(
+                title: 'Delete',
+                onTap: (_) {
+                  setState(() => items.removeAt(index));
+                },
+              ),
+            ],
+          ),
+          separatorBuilder: (_, index) => Divider(
+            color: Colors.black45,
+            height: 1,
+          ),
         ),
       ),
     );
