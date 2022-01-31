@@ -1,3 +1,8 @@
+// Dismissble is not a good option because it doesn't support
+// exposing a "Delete" button and waiting for it to be tapped
+// before deleting an item.
+// A better option is to use the flutter_swipe_action_cell library
+// in pub.dev.  That is demonstrated here.
 import 'package:flutter/material.dart';
 import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
 
