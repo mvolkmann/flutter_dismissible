@@ -33,7 +33,7 @@ class Home extends StatefulWidget {
 }
 
 const longSubtitle =
-    'This is a very long subtitle that will need to wrap. This is common for paragraphs of text. Is there any limit to the length?';
+    'This is a very long subtitle that will need to wrap. This is common for paragraphs of text. There seems to be no limit to the length.';
 const shortSubtitle = 'This is a short subtitle.';
 const wrap = false;
 
@@ -127,7 +127,7 @@ class _HomeState extends State<Home> {
       iconColor: Colors.blue, // icon color
       //isThreeLine: true,
       key: ObjectKey(item),
-      leading: Icon(Icons.ac_unit),
+      leading: Icon(Icons.edit),
       onTap: () {
         print('got tap on $title');
         setState(() {
@@ -141,7 +141,7 @@ class _HomeState extends State<Home> {
       subtitle: Text(item.subtitle),
       textColor: Colors.black, // text color
       tileColor: Colors.yellow[100],
-      title: Text(title),
+      title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
       trailing: Icon(Icons.access_alarms),
     );
   }
