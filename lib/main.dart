@@ -80,15 +80,28 @@ class _HomeState extends State<Home> {
   ) {
     var key = ObjectKey(items[index]);
     var tile = _buildTile(index);
+
+    deleteFn() {
+      setState(() => items.removeAt(index));
+    }
+
+    var background = Row(
+      children: [
+        ElevatedButton(
+          child: Text('Delete'),
+          style: ElevatedButton.styleFrom(primary: Colors.red),
+          onPressed: deleteFn,
+        ),
+      ],
+      mainAxisAlignment: MainAxisAlignment.end,
+    );
+
     if (!wrap) {
       return Dismissible(
-        child: tile,
-        key: key,
-        onDismissed: (direction) {
-          setState(() {
-            items.removeAt(index);
-          });
-        },
+        background: background,
+        child: tile, // required
+        key: key, // required
+        onDismissed: (direction) => deleteFn(),
       );
     }
 
@@ -98,9 +111,7 @@ class _HomeState extends State<Home> {
       trailingActions: <SwipeAction>[
         SwipeAction(
           title: 'Delete',
-          onTap: (_) {
-            setState(() => items.removeAt(index));
-          },
+          onTap: (direction) => deleteFn(),
         ),
       ],
     );
