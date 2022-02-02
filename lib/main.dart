@@ -117,6 +117,8 @@ class _HomeState extends State<Home> {
     }
 
     return SwipeActionCell(
+      // When ListTile widgets are wrapped in a SwipeActionCell,
+      // their background color must be specified here.
       backgroundColor: item.selected ? selectedTileColor : tileColor,
       child: tile,
       key: key,
