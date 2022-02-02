@@ -32,8 +32,27 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
+const longSubtitle =
+    'This is a very long subtitle that will need to wrap. This is common for paragraphs of text. Is there any limit to the length?';
+const shortSubtitle = 'This is a short subtitle.';
+
+class Item {
+  String title;
+  String subtitle;
+  bool selected;
+
+  Item({required this.title, this.subtitle = '', this.selected = false});
+}
+
 class _HomeState extends State<Home> {
-  var items = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
+  var items = [
+    Item(title: 'red', subtitle: shortSubtitle),
+    Item(title: 'orange', subtitle: longSubtitle),
+    Item(title: 'yellow', subtitle: shortSubtitle),
+    Item(title: 'green', subtitle: shortSubtitle),
+    Item(title: 'blue', subtitle: shortSubtitle),
+    Item(title: 'purple', subtitle: shortSubtitle),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +78,7 @@ class _HomeState extends State<Home> {
     int index,
   ) =>
       SwipeActionCell(
-        child: ListTile(title: Text(items[index])),
+        child: _buildTile(index),
         key: ObjectKey(items[index]),
         trailingActions: <SwipeAction>[
           SwipeAction(
@@ -70,4 +89,31 @@ class _HomeState extends State<Home> {
           ),
         ],
       );
+
+  Widget _buildTile(int index) {
+    var item = items[index];
+    var title = item.title;
+
+    return ListTile(
+      enabled: title != 'green',
+      iconColor: Colors.blue, // icon color
+      //isThreeLine: true,
+      leading: Icon(Icons.ac_unit),
+      onTap: () {
+        print('got tap on $title');
+        setState(() {
+          item.selected = !item.selected;
+        });
+      },
+      selected: item.selected,
+      selectedColor: Colors.green, // text and icon color
+      //selectedIconColor: Colors.green, // not supported
+      selectedTileColor: Colors.yellow, // NOT WORKING!
+      subtitle: Text(item.subtitle),
+      textColor: Colors.red, // text color
+      tileColor: Colors.yellow, // NOT WORKING!
+      title: Text(title),
+      trailing: Icon(Icons.access_alarms),
+    );
+  }
 }
