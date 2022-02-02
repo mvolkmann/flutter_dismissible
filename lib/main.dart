@@ -54,6 +54,8 @@ class _HomeState extends State<Home> {
     Item(title: 'blue', subtitle: shortSubtitle),
     Item(title: 'purple', subtitle: shortSubtitle),
   ];
+  var selectedTileColor = Colors.green[100];
+  var tileColor = Colors.yellow[100];
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +80,8 @@ class _HomeState extends State<Home> {
     BuildContext context,
     int index,
   ) {
-    var key = ObjectKey(items[index]);
+    var item = items[index];
+    var key = ObjectKey(item);
     var tile = _buildTile(index);
 
     deleteFn() {
@@ -108,6 +111,7 @@ class _HomeState extends State<Home> {
     }
 
     return SwipeActionCell(
+      backgroundColor: item.selected ? selectedTileColor : tileColor,
       child: tile,
       key: key,
       trailingActions: <SwipeAction>[
@@ -124,6 +128,7 @@ class _HomeState extends State<Home> {
     var selected = item.selected;
     var title = item.title;
 
+    // There is no selectedIconColor argument.
     return ListTile(
       enabled: title != 'green',
       iconColor: Colors.blue, // icon color
@@ -137,14 +142,16 @@ class _HomeState extends State<Home> {
         });
       },
       selected: selected,
-      selectedColor: Colors.green, // text and icon color
-      //selectedIconColor: Colors.green, // not supported
-      selectedTileColor: Colors.green[100],
       subtitle: Text(item.subtitle),
       textColor: Colors.black, // text color
-      tileColor: Colors.yellow[100],
       title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
       trailing: Icon(Icons.access_alarms),
+
+      // The following arguments are ignored when
+      // the ListTile is wrapped in a SwipeActionCell.
+      selectedColor: Colors.green, // text and icon color
+      selectedTileColor: selectedTileColor,
+      tileColor: tileColor,
     );
   }
 }
