@@ -78,12 +78,23 @@ class _HomeState extends State<Home> {
     BuildContext context,
     int index,
   ) {
+    var key = ObjectKey(items[index]);
     var tile = _buildTile(index);
-    if (!wrap) return tile;
+    if (!wrap) {
+      return Dismissible(
+        child: tile,
+        key: key,
+        onDismissed: (direction) {
+          setState(() {
+            items.removeAt(index);
+          });
+        },
+      );
+    }
 
     return SwipeActionCell(
       child: tile,
-      key: ObjectKey(items[index]),
+      key: key,
       trailingActions: <SwipeAction>[
         SwipeAction(
           title: 'Delete',
