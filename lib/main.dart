@@ -8,6 +8,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
 
+const longSubtitle =
+    'This is a very long subtitle that will need to wrap. This is common for paragraphs of text. There seems to be no limit to the length.';
+const shortSubtitle = 'This is a short subtitle.';
+const wrap = false;
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -31,11 +36,6 @@ class Home extends StatefulWidget {
   @override
   State<Home> createState() => _HomeState();
 }
-
-const longSubtitle =
-    'This is a very long subtitle that will need to wrap. This is common for paragraphs of text. There seems to be no limit to the length.';
-const shortSubtitle = 'This is a short subtitle.';
-const wrap = false;
 
 class Item {
   String title;
