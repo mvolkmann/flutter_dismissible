@@ -85,18 +85,20 @@ class _HomeState extends State<Home> {
       setState(() => items.removeAt(index));
     }
 
-    var background = Row(
-      children: [
-        ElevatedButton(
-          child: Text('Delete'),
-          style: ElevatedButton.styleFrom(primary: Colors.red),
-          onPressed: deleteFn,
-        ),
-      ],
-      mainAxisAlignment: MainAxisAlignment.end,
-    );
-
     if (!wrap) {
+      // Users will never get a chance to tap the Delete button
+      // because it disappears as soon as they stop dragging the tile.
+      var background = Row(
+        children: [
+          ElevatedButton(
+            child: Text('Delete'),
+            style: ElevatedButton.styleFrom(primary: Colors.red),
+            onPressed: deleteFn,
+          ),
+        ],
+        mainAxisAlignment: MainAxisAlignment.end,
+      );
+
       return Dismissible(
         background: background,
         child: tile, // required
